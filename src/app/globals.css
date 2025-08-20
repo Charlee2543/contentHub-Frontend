@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-   --background: #ffffff;
-   --foreground: #171717;
+   /* --background: #ffffff;
+   --foreground: #171717; */
    /*  */
    --dark-green: #141f17;
    --mint-green: #94e0b2;
@@ -11,23 +11,25 @@
    /* --pale-green: #8fbf9a; */
    --pale-green: #9cbfab;
    /* --moss-green: #2f4a32; */
-   --moss-green: #141f17;
-   --green: #38e07a;
-   --white: #ffffff;
+   --moss-green: #121714;
+   --green-btn: #38e07a;
+   --white-text: #ffffff;
    /* --light-gray: #cfcfcf; */
    /* --beige: #e9dcc6; */
+   --front-use: "Kanit";
 }
 
 @theme inline {
-   --color-background: var(--background);
-   --color-foreground: var(--foreground);
-   --font-sans: var(--font-geist-sans);
-   --font-mono: var(--font-geist-mono);
+   /* --color-background: var(--background);
+   --color-foreground: var(--foreground); */
+   --font-sans: var(--font-Kanit-sans);
+   --font-mono: var(--font-Kanit-mono);
 }
 
 @media (prefers-color-scheme: dark) {
+   /* backgroundm ทั้งเว็บ */
    :root {
-      --background: #0a0a0a;
+      --background: var(--dark-green);
       --foreground: #ededed;
    }
 }
@@ -35,5 +37,97 @@
 body {
    background: var(--background);
    color: var(--foreground);
-   font-family: Arial, Helvetica, sans-serif;
+   font-family: Kanit, sans-serif;
+}
+
+.feature-title {
+   font-size: 28px;
+   font-weight: 700;
+   color: var(--white-text);
+}
+.second-title {
+   font-size: 20px;
+   font-weight: 700;
+   color: var(--white-text);
+}
+.tag-text {
+   font-size: 14px;
+   font-weight: 300;
+   color: var(--pale-green);
+}
+.description-text {
+   font-size: 16px;
+   font-weight: 400;
+   color: var(--pale-green);
+}
+.login-btn-text {
+   font-size: 16px;
+   font-weight: 500;
+   color: var(--green-btn);
+}
+.content-text {
+   font-size: 16px;
+   font-weight: 400;
+   color: var(--white-text);
+}
+.user-name {
+   font-size: 16px;
+   font-weight: 700;
+   color: var(--white-text);
+}
+.chat-me {
+   padding: 12px 16px;
+   background: var(--green-btn);
+   border: 0px solid var(--green-btn);
+   border-radius: 8px;
+   font-size: 16px;
+   font-weight: 400;
+   color: var(--moss-green);
+}
+
+.botton-link {
+   background: var(--mint-green);
+   padding: 6px 18px;
+   height: 40px;
+   border: 0px solid var(--mint-green);
+   border-radius: 8px;
+   box-sizing: border-box;
+   font-size: 14px;
+   font-weight: 700;
+   color: var(--moss-green);
+   transition: all 0.1s ease; /* animation เวลา hover */
+}
+.botton-link:hover {
+   background-color: #96f7bd;
+   transform: scale(1.03); /* ขยายเล็กน้อย */
+}
+
+/* เมื่อกดปุ่ม */
+.botton-link:active {
+   background-color: #76b48f;
+   transform: scale(0.98); /* ย่อเล็กน้อย */
+}
+
+/* ปุ่มไม่สามารถใช้งาน */
+.botton-link:disabled {
+   background-color: #cfbaba;
+   cursor: not-allowed;
+   opacity: 0.7;
+}
+.btn {
+   cursor: pointer; /* เปลี่ยน cursor เมื่อชี้ */
+}
+.btn:hover {
+   transform: scale(1.03); /* ขยายเล็กน้อย */
+}
+
+/* เมื่อกดปุ่ม */
+.btn:active {
+   transform: scale(0.98); /* ย่อเล็กน้อย */
+}
+
+/* ปุ่มไม่สามารถใช้งาน */
+.btn:disabled {
+   cursor: not-allowed;
+   opacity: 0.7;
 }
