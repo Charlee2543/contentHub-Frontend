@@ -20,8 +20,8 @@
 }
 
 @theme inline {
-   /* --color-background: var(--background);
-   --color-foreground: var(--foreground); */
+   --color-background: var(--background);
+   --color-foreground: var(--foreground);
    --font-sans: var(--font-Kanit-sans);
    --font-mono: var(--font-Kanit-mono);
 }
@@ -85,7 +85,7 @@ body {
    color: var(--moss-green);
 }
 
-.botton-link {
+.button-link {
    background: var(--mint-green);
    padding: 6px 18px;
    height: 40px;
@@ -95,21 +95,22 @@ body {
    font-size: 14px;
    font-weight: 700;
    color: var(--moss-green);
+   cursor: pointer;
    transition: all 0.1s ease; /* animation เวลา hover */
 }
-.botton-link:hover {
+.button-link:hover {
    background-color: #96f7bd;
    transform: scale(1.03); /* ขยายเล็กน้อย */
 }
 
 /* เมื่อกดปุ่ม */
-.botton-link:active {
+.button-link:active {
    background-color: #76b48f;
    transform: scale(0.98); /* ย่อเล็กน้อย */
 }
 
 /* ปุ่มไม่สามารถใช้งาน */
-.botton-link:disabled {
+.button-link:disabled {
    background-color: #cfbaba;
    cursor: not-allowed;
    opacity: 0.7;
