@@ -1,6 +1,7 @@
 // import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const kanitSans = Kanit({
    variable: "--font-kanit-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({
    return (
       <html lang="en">
          <body className={`${kanitSans.variable} antialiased `}>
+            <Navbar />
             {children}
          </body>
       </html>
