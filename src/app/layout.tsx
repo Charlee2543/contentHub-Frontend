@@ -1,3 +1,4 @@
+"use client";
 // import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import "./globals.css";
@@ -27,7 +28,7 @@ export default function RootLayout({
 }>) {
    return (
       <html lang="en">
-         <body className={`${kanitSans.variable} antialiased `}>
+         <body className={`${kanitSans.variable} `}>
             <Navbar />
             {children}
          </body>

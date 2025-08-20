@@ -2,62 +2,58 @@
 import Image from "next/image";
 import ButtonLink from "./components/ButtonLink";
 import InputText from "./components/InputText";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import InputNumber from "./components/InputNumber";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+   const router = useRouter();
    const [searchInput, setSearchInput] = useState<string>("");
-   const [searchNumberInput, setSearchNumberInput] = useState<number | null>(
-      null
-   );
    // const searching = (inputSearch: string) => {
    //    setSearchInput(inputSearch);
    // };
    return (
-      <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-         <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-            <InputNumber
-               width={"50%"}
-               typeInput={"tel"}
-               valueNumber={searchNumberInput}
-               setValueNumber={setSearchNumberInput}
-               placeholder={"Search  number..."}
-            />
+      <main className="w-full flex justify-center">
+         <div className="flex flex-col items-start w-full max-w-[960px] gap-[32px] mx-[160px] my-4 border-2  ">
             <InputText
-               width={"50%"}
+               icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
                typeInput={"text"}
                valueText={searchInput}
                setValueText={setSearchInput}
                placeholder={"Search  articles..."}
+               stlyeTailwind="my-3  border-2 w-full "
             />
-            <Image
-               className="dark:invert"
-               src="/next.svg"
-               alt="Next.js logo"
-               width={180}
-               height={38}
-               priority
-            />
-            <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-               <li className="tracking-[-.01em]">
-                  Save and see your changes instantly.
-               </li>
-               <li className="feature-title">test-text</li>
-               <li className="second-title">test-text</li>
-               <li className="tag-text">test-text</li>
-               <li className="description-text">test-text</li>
-               <li className="btn login-btn-text">test-text</li>
-               <li className="content-text">test-text content-text</li>
-               <li className="user-name">test-text </li>
-               <li className="chat-me ">test-text </li>
-               <li className="button-link">test-text </li>
-            </ol>
-            <ButtonLink
-               functionOut={() => alert("test ButtonLink")}
-               textButton={"test ButtonLink"}
-               marginXY={"10 20"}
-            />
-         </main>
-      </div>
+            <h1 className="feature-title">Featured Articles</h1>
+            <section className="w-full flex justify-start items-start">
+               <img
+                  className=""
+                  src="https://static.vecteezy.com/system/resources/thumbnails/045/132/934/small_2x/a-beautiful-picture-of-the-eiffel-tower-in-paris-the-capital-of-france-with-a-wonderful-background-in-wonderful-natural-colors-photo.jpg"
+                  alt="logotower"
+                  width={464}
+                  height={256}
+               />
+               <div className="flex flex-col w-full list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left border-2">
+                  <p className="tag-text">Marketing</p>
+                  <p className="second-title">
+                     The Future of AI in Content Creation
+                  </p>
+                  <div className="flex items-end justify-between">
+                     <p className="description-text w-fit">
+                        Explore how artificial intelligence is revolutionizing
+                        the way content is created, managed, and distributed.
+                     </p>
+                     <ButtonLink
+                        functionOut={() => router.push("/")}
+                        textButton={"Read More"}
+                        paddinXY={"1px 8px"}
+                        width={"120px"}
+                        stlyeTailwind="  box-border  "
+                     />
+                  </div>
+               </div>
+            </section>
+         </div>
+      </main>
    );
 }
