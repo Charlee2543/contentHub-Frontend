@@ -15,14 +15,14 @@ export default function Home() {
    // };
    return (
       <main className="w-full flex justify-center">
-         <div className="flex flex-col items-start w-full max-w-[960px] gap-[32px] mx-[160px] my-4 border-2  ">
+         <div className="flex flex-col items-start w-full max-w-[960px] gap-[32px] mx-[160px] my-4   ">
             <InputText
                icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
                typeInput={"text"}
                valueText={searchInput}
                setValueText={setSearchInput}
                placeholder={"Search  articles..."}
-               stlyeTailwind="my-3  border-2 w-full "
+               stlyeTailwind="my-3   w-full "
             />
             <h1 className="feature-title">Featured Articles</h1>
             <section className="w-full flex justify-start items-start">
@@ -33,7 +33,7 @@ export default function Home() {
                   width={464}
                   height={256}
                />
-               <div className="flex flex-col w-full list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left border-2">
+               <div className="flex flex-col w-full list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
                   <p className="tag-text">Marketing</p>
                   <p className="second-title">
                      The Future of AI in Content Creation

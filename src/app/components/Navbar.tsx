@@ -12,7 +12,7 @@ function Navbar() {
          <div className="flex items-center gap-8">
             <Link
                href="#"
-               className="flex items-center gap-3  text-white cursor-pointer"
+               className="btn flex items-center gap-3  text-white cursor-pointer"
             >
                <FontAwesomeIcon className="h-[16px] " icon={faMugSaucer} />
                <h2 className="w-fit text-white text-lg font-bold leading-tight tracking-[-0.015em]">
@@ -20,11 +20,11 @@ function Navbar() {
                </h2>
             </Link>
             <div className="flex items-center gap-[30px]">
-               <Link className="content-text cursor-pointer" href="#">
+               <Link className="btn content-text cursor-pointer" href="#">
                   Article
                </Link>
-               <Link className="content-text cursor-pointer" href="#">
-                  Contact Admin
+               <Link className="btn content-text cursor-pointer" href="#">
+                  1a Contact Admin
                </Link>
             </div>
          </div>

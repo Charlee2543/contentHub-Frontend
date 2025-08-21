@@ -97,7 +97,7 @@ body {
    font-weight: 700;
    color: var(--moss-green);
    cursor: pointer;
-   transition: all 0.1s ease; /* animation เวลา hover */
+   transition: all 0.15s ease; /* animation เวลา hover */
 }
 .button-link:hover {
    background-color: #96f7bd;
@@ -117,6 +117,7 @@ body {
    opacity: 0.7;
 }
 .btn {
+   transition: all 0.15s ease;
    cursor: pointer; /* เปลี่ยน cursor เมื่อชี้ */
 }
 .btn:hover {
