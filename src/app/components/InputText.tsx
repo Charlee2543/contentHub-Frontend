@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction } from "react";
+// import React, { Dispatch, SetStateAction } from "react";
 import { ReactNode } from "react";
 
 interface inputTextType {
    idInput?: string;
    typeInput: string;
    valueText: string;
-   setValueText: Dispatch<SetStateAction<string>>;
+   setValueText: (valeu: string) => void;
    placeholder: string;
    icon?: ReactNode;
    stlyeTailwind?: string;

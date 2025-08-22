@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+// import Image from "next/image";
 import ButtonLink from "./components/ButtonLink";
 import InputText from "./components/InputText";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 export default function Home() {
    const router = useRouter();
    const [searchInput, setSearchInput] = useState<string>("");
-   // const searching = (inputSearch: string) => {
-   //    setSearchInput(inputSearch);
-   // };
+   const searching = (inputSearch: string) => {
+      setSearchInput(inputSearch);
+   };
    return (
       <main className="w-full flex justify-center">
          <div className="flex flex-col items-start w-full max-w-[960px] gap-[32px] mx-[160px] my-4   ">
@@ -20,7 +20,7 @@ export default function Home() {
                icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
                typeInput={"text"}
                valueText={searchInput}
-               setValueText={setSearchInput}
+               setValueText={searching}
                placeholder={"Search  articles..."}
                stlyeTailwind="my-3   w-full "
             />
