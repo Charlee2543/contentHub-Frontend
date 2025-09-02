@@ -1,9 +1,8 @@
-"use client";
+// "use client";
 // import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-
+import { AuthProvider } from "@/lib/authLoginLogout";
 const kanitSans = Kanit({
    variable: "--font-kanit-sans",
    subsets: ["thai"],
@@ -28,10 +27,9 @@ export default function RootLayout({
 }>) {
    return (
       <html lang="en">
-         <body className={`${kanitSans.variable} `}>
-            <Navbar />
-            {children}
-         </body>
+         <AuthProvider>
+            <body className={`${kanitSans.variable} `}>{children}</body>
+         </AuthProvider>
       </html>
    );
 }

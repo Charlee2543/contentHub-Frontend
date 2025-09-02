@@ -1,18 +1,50 @@
 "use client";
 // import Image from "next/image";
-import ButtonLink from "./components/ButtonLink";
-import InputText from "./components/InputText";
+import ButtonLink from "../components/ui/ButtonLink";
+import InputText from "../components/ui/InputText";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useAuth } from "@/lib/authLoginLogout";
+
+//  refecter แก้ useState ไป component อื่น เปลี่ยนเป็น use Server
+interface Post {
+   id: number;
+   title: string;
+   content: string;
+}
 
 export default function Home() {
+   const { login, refresh, logout, accessToken } = useAuth();
+   // console.log("accessToken: ", accessToken);
    const router = useRouter();
    const [searchInput, setSearchInput] = useState<string>("");
+   const [posts, setPosts] = useState<Post[]>([]);
+
    const searching = (inputSearch: string) => {
       setSearchInput(inputSearch);
    };
+
+   // useEffect(() => {
+   //    const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
+   //    const fetchPost = async () => {
+   //       try {
+   //          if (!API_URL) {
+   //             throw new Error("API URL is not defined.");
+   //          }
+
+   //          const response = await axios.get(`${API_URL}/posts`);
+   //          const posts = response.data;
+   //          console.log("Fetched posts:", posts);
+   //       } catch (error) {
+   //          console.error("Error fetching posts:", error);
+   //       }
+   //    };
+   //    fetchPost();
+   // }, []);
+
    return (
       <main className="w-full flex justify-center">
          <div className="flex flex-col items-start w-full max-w-[960px] gap-[32px] mx-[160px] my-4   ">
