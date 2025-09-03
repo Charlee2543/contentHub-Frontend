@@ -40,7 +40,7 @@ export default function Home() {
                throw new Error("API URL is not defined.");
             }
 
-            const response = await axios.get(`${API_URL}/posts`);
+            const response = await axios.get(`${API_URL}/posts/`);
             const posts = response.data;
             console.log("Fetched posts:", posts);
             setBlogPostFromFetch(posts);
