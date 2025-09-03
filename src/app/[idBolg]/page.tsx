@@ -57,11 +57,11 @@ export default function Home({
             <Breadcrumbs />
             <section
                key={dataBlog.article_id}
-               className=" w-full h-fit flex flex-col justify-start items-start border"
+               className=" w-full h-fit flex flex-col justify-start items-start "
             >
                <h1 className="feature-title mt-5 mx-4">{dataBlog.title}</h1>
                <p className="tag-text my-3 mx-4">
-                  Published by Olivia Harper · 2 days ago
+                  Published by Olivia Harper · 2 days ago test ๆ
                </p>
                <div className="relative w-full h-[60vh] max-h-[650px]">
                   <Image
