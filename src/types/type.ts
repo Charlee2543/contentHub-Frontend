@@ -1,5 +1,15 @@
 import { UUID } from "crypto";
 
+export interface postType {
+   article_id: number;
+   title: string;
+   picture: string;
+   content: string;
+   updated_at: Date;
+   created_at: Date;
+   likes_count: number;
+   author: UUID;
+}
 export interface dataRegisterType {
    username: string;
    email: string;

@@ -64,7 +64,7 @@ function Navbar() {
    }, [, accessToken]);
 
    return (
-      <div className="sticky top-0">
+      <div className="sticky top-0 z-30">
          <header className="flex items-center justify-between bg-[var(--dark-green)] px-10 py-3 border-b border-solid border-b-[#E5E8EB] ">
             <div className="flex items-center gap-8">
                <Link

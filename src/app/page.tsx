@@ -6,44 +6,50 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { postType } from "@/types/type";
 import axios from "axios";
-import { useAuth } from "@/lib/authLoginLogout";
+import { useBlog } from "@/lib/BlogContext";
+import Image from "next/image";
 
 //  refecter แก้ useState ไป component อื่น เปลี่ยนเป็น use Server
-interface Post {
-   id: number;
-   title: string;
-   content: string;
-}
 
 export default function Home() {
-   const { login, refresh, logout, accessToken } = useAuth();
+   const { blogs, setBlogs } = useBlog();
+
    // console.log("accessToken: ", accessToken);
    const router = useRouter();
    const [searchInput, setSearchInput] = useState<string>("");
-   const [posts, setPosts] = useState<Post[]>([]);
 
    const searching = (inputSearch: string) => {
       setSearchInput(inputSearch);
    };
 
-   // useEffect(() => {
-   //    const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
-   //    const fetchPost = async () => {
-   //       try {
-   //          if (!API_URL) {
-   //             throw new Error("API URL is not defined.");
-   //          }
+   const truncateText = (text: string, maxLength: number) => {
+      if (text.length > maxLength) {
+         return text.substring(0, maxLength) + "...";
+      }
+      return text;
+   };
 
-   //          const response = await axios.get(`${API_URL}/posts`);
-   //          const posts = response.data;
-   //          console.log("Fetched posts:", posts);
-   //       } catch (error) {
-   //          console.error("Error fetching posts:", error);
-   //       }
-   //    };
-   //    fetchPost();
-   // }, []);
+   useEffect(() => {
+      const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
+      const setBlogPostFromFetch = (blog: postType[]) => setBlogs(blog);
+      const fetchPost = async () => {
+         try {
+            if (!API_URL) {
+               throw new Error("API URL is not defined.");
+            }
+
+            const response = await axios.get(`${API_URL}/posts`);
+            const posts = response.data;
+            console.log("Fetched posts:", posts);
+            setBlogPostFromFetch(posts);
+         } catch (error) {
+            console.error("Error fetching posts:", error);
+         }
+      };
+      fetchPost();
+   }, [setBlogs]);
 
    return (
       <main className="w-full flex justify-center">
@@ -57,34 +63,52 @@ export default function Home() {
                stlyeTailwind="my-3   w-full "
             />
             <h1 className="feature-title">Featured Articles</h1>
-            <section className="w-full flex justify-start items-start">
-               <img
-                  className=""
-                  src="https://static.vecteezy.com/system/resources/thumbnails/045/132/934/small_2x/a-beautiful-picture-of-the-eiffel-tower-in-paris-the-capital-of-france-with-a-wonderful-background-in-wonderful-natural-colors-photo.jpg"
-                  alt="logotower"
-                  width={464}
-                  height={256}
-               />
-               <div className="flex flex-col w-full list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
-                  <p className="tag-text">Marketing</p>
-                  <p className="second-title">
-                     The Future of AI in Content Creation
-                  </p>
-                  <div className="flex items-end justify-between">
-                     <p className="description-text w-fit">
-                        Explore how artificial intelligence is revolutionizing
-                        the way content is created, managed, and distributed.
-                     </p>
-                     <ButtonLink
-                        functionOut={() => router.push("/")}
-                        textButton={"Read More"}
-                        paddinXY={"1px 8px"}
-                        width={"120px"}
-                        stlyeTailwind="  box-border  "
-                     />
+            {blogs.map((blog) => {
+               return (
+                  <div
+                     key={blog.article_id}
+                     className=" w-full h-[256px] flex justify-start items-start "
+                  >
+                     <div className="relative w-[45%] h-full ">
+                        <Image
+                           className=" rounded-[8px] "
+                           style={{ objectFit: "cover" }}
+                           src={blog.picture}
+                           alt={blog.title}
+                           priority={false} //ให้โหลดรูปภาพไว้ล่วงหน้าไหม ไม่
+                           fill={true}
+                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" //เมื่อ รูปมีขนาดไฟล์ จะโหลดไฟล์มาขนาดเท่าไหร่ ป้องกันการโหลดไฟล์ใหญ่
+
+                           // width={464}
+                           // height={256}
+                        />
+                     </div>
+                     <div className="flex flex-col w-[55%] list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
+                        <p className="tag-text">Marketing</p>
+                        <p className="second-title">{blog.title}</p>
+                        <div className="flex items-end justify-between">
+                           <p className="description-text w-fit">
+                              {truncateText(blog.content, 200)}
+                           </p>
+                           <ButtonLink
+                              functionOut={() => {
+                                 const encodedTId = encodeURIComponent(
+                                    blog.article_id
+                                 );
+                                 return router.push(
+                                    `/${blog.title}--${encodedTId}`
+                                 );
+                              }}
+                              textButton={"Read More"}
+                              paddinXY={"1px 8px"}
+                              width={"120px"}
+                              stlyeTailwind="  box-border  "
+                           />
+                        </div>
+                     </div>
                   </div>
-               </div>
-            </section>
+               );
+            })}
          </div>
       </main>
    );

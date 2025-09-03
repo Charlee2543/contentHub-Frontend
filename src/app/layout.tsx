@@ -3,6 +3,7 @@
 import { Kanit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/authLoginLogout";
+import { BlogProvider } from "@/lib/BlogContext";
 const kanitSans = Kanit({
    variable: "--font-kanit-sans",
    subsets: ["thai"],
@@ -28,7 +29,9 @@ export default function RootLayout({
    return (
       <html lang="en">
          <AuthProvider>
-            <body className={`${kanitSans.variable} `}>{children}</body>
+            <BlogProvider>
+               <body className={`${kanitSans.variable} `}>{children}</body>
+            </BlogProvider>
          </AuthProvider>
       </html>
    );
