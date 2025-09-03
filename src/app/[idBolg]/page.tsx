@@ -5,6 +5,8 @@ import Image from "next/image";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import axios from "axios";
 import { postType } from "@/types/type";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCommentDots, faHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function Home({
    params,
@@ -78,16 +80,21 @@ export default function Home({
                </div>
                <p
                   style={{ textIndent: "2em" }}
-                  className="description-text w-fit my-3 mx-4"
+                  className="description-text w-fit mt-3 my-7 mx-4"
                >
                   {dataBlog.content}
                </p>
-               <div className="flex  w-[55%] list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
-                  <div className="flex items-end justify-between">
-                     icon love <span>5</span>
+               <div className="flex tag-text w-[55%]  mx-7 gap-10 ">
+                  <div className="btn flex items-center gap-2 hover:text-red-500">
+                     <FontAwesomeIcon icon={faHeart} className="text-[24px] " />
+                     <span>5</span>
                   </div>
-                  <div className="flex items-end justify-between">
-                     icon comment <span>10</span>
+                  <div className="flex items-center gap-2">
+                     <FontAwesomeIcon
+                        icon={faCommentDots}
+                        className="text-[24px]"
+                     />
+                     <span>10</span>
                   </div>
                </div>
             </section>

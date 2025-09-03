@@ -10,6 +10,7 @@ import { postType } from "@/types/type";
 import axios from "axios";
 import { useBlog } from "@/lib/BlogContext";
 import Image from "next/image";
+import Link from "next/link";
 
 //  refecter แก้ useState ไป component อื่น เปลี่ยนเป็น use Server
 
@@ -69,7 +70,12 @@ export default function Home() {
                      key={blog.article_id}
                      className=" w-full h-[256px] flex justify-start items-start "
                   >
-                     <div className="relative w-[45%] h-full ">
+                     <Link
+                        href={`/${blog.title}--${encodeURIComponent(
+                           blog.article_id
+                        )}`}
+                        className="relative btn w-[45%] h-full "
+                     >
                         <Image
                            className=" rounded-[8px] "
                            style={{ objectFit: "cover" }}
@@ -82,10 +88,17 @@ export default function Home() {
                            // width={464}
                            // height={256}
                         />
-                     </div>
+                     </Link>
                      <div className="flex flex-col w-[55%] list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
                         <p className="tag-text">Marketing</p>
-                        <p className="second-title">{blog.title}</p>
+                        <Link
+                           href={`/${blog.title}--${encodeURIComponent(
+                              blog.article_id
+                           )}`}
+                           className="second-title "
+                        >
+                           {blog.title}
+                        </Link>
                         <div className="flex items-end justify-between">
                            <p className="description-text w-fit">
                               {truncateText(blog.content, 200)}

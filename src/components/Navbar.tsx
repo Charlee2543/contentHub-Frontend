@@ -68,21 +68,23 @@ function Navbar() {
          <header className="flex items-center justify-between bg-[var(--dark-green)] px-10 py-3 border-b border-solid border-b-[#E5E8EB] ">
             <div className="flex items-center gap-8">
                <Link
-                  href="#"
-                  className="btn flex items-center gap-3  text-white cursor-pointer"
+                  href="/"
+                  className="btn flex items-center gap-3  text-white hover:text-[var(--green-btn)] hover:underline"
                >
                   <FontAwesomeIcon className="h-[16px] " icon={faMugSaucer} />
-                  <h2 className="w-fit text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+                  <h2 className="w-fit  text-lg font-bold leading-tight tracking-[-0.015em]  ">
                      Content Hub
                   </h2>
                </Link>
                <div className="flex items-center gap-[30px]">
-                  <Link className="btn content-text cursor-pointer" href="#">
-                     Article
+                  <Link className="btn content-text   " href="/">
+                     <span className="hover:text-[var(--green-btn)] hover:underline">
+                        Article
+                     </span>
                   </Link>
-                  <Link className="btn content-text cursor-pointer" href="#">
+                  {/* <Link className="btn content-text cursor-pointer" href="/">
                      Contact Admin
-                  </Link>
+                  </Link> */}
                </div>
             </div>
             <div className="flex flex-1 justify-end gap-8">
