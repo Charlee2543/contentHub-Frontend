@@ -1,5 +1,5 @@
 "use client";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useBlog } from "@/lib/BlogContext";
 import Image from "next/image";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -25,32 +25,34 @@ export default function Home({
       article_id: Number(splitParam[1]),
    };
 
-   const fetch = async () => {
-      try {
-         const res = await axios.get(
-            `${API_URL}/posts/${objectParam.article_id}`
-         );
-         setDataBlog(res.data);
-      } catch (error) {
-         console.error("Error fetching posts:", error);
+   // && (!dataBlog || Object.keys(dataBlog).length === 0)
+   useEffect(() => {
+      const fetch = async () => {
+         try {
+            const res = await axios.get(
+               `${API_URL}/posts/${objectParam.article_id}`
+            );
+            setDataBlog(res.data);
+         } catch (error) {
+            console.error("Error fetching posts:", error);
+         }
+      };
+      if (blogs.length > 0) {
+         console.log("true blogs");
+         const data = blogs.find((value) => {
+            return value.article_id === objectParam.article_id;
+         });
+         // console.log("data: ", data);
+
+         setDataBlog(data);
+      } else if (
+         blogs.length === 0 &&
+         (!dataBlog || Object.keys(dataBlog).length === 0)
+      ) {
+         console.log("false blogs");
+         fetch();
       }
-   };
-
-   if (blogs.length > 0 && (!dataBlog || Object.keys(dataBlog).length === 0)) {
-      console.log("true blogs");
-      const data = blogs.find((value) => {
-         value.article_id = objectParam.article_id;
-         return value;
-      });
-
-      setDataBlog(data);
-   } else if (
-      blogs.length === 0 &&
-      (!dataBlog || Object.keys(dataBlog).length === 0)
-   ) {
-      console.log("false blogs");
-      fetch();
-   }
+   }, [API_URL, blogs, dataBlog, objectParam.article_id]);
    if (dataBlog) {
       return (
          <div className="m-y-5 mx-[160px] flex flex-col ">

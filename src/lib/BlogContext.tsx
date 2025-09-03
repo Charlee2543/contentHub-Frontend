@@ -19,7 +19,7 @@ const BlogContext = createContext<BlogContextType | undefined>(undefined);
 
 export const BlogProvider = ({ children }: { children: ReactNode }) => {
    const [blogs, setBlogs] = useState<postType[]>([]);
-   console.log("blogs: ", blogs);
+   // console.log("blogs: ", blogs);
    return (
       <BlogContext.Provider
          value={{

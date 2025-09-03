@@ -41,7 +41,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
    const [accessToken, setAccessToken] = useState<string | null>(null);
    // const [dataUserProfile, setDataUserProfile] = useState<>();
-   console.log("accessToken: ", accessToken);
+   // console.log("accessToken: ", accessToken);
 
    // การตั้งค่าเปิดปิด login
    const [statusLogin, setStatusLogin] = useState<LoginStatus>("login");
