@@ -16,9 +16,10 @@ import { useAuth } from "@/lib/authLoginLogout";
 // import { userProfile } from "@/types/type";
 
 export const RemoveUserProfile = () => {
-   const { resetAccessToken } = useAuth();
-   resetAccessToken();
    localStorage.removeItem("userProfile");
+   Cookies.remove("refresh");
+   console.log("RemoveUserProfile ");
+   window.location.reload();
 };
 
 export const CheckRefreshtoken = () => {

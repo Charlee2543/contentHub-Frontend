@@ -24,7 +24,7 @@ function Breadcrumbs() {
       <nav aria-label="Breadcrumb">
          <ol className="flex space-x-2 m-4">
             <li className="flex items-center">
-               <Link href="/" className="btn tag-text">
+               <Link href="/" className="btns tag-text">
                   <span className="hover:text-[var(--green-btn)] hover:underline">
                      Home
                   </span>
@@ -55,7 +55,7 @@ function Breadcrumbs() {
                         </span>
                      ) : (
                         // Other pages are links
-                        <Link href={href} className="btn tag-text">
+                        <Link href={href} className="btns tag-text">
                            <span className="hover:text-[var(--green-btn)] hover:underline">
                               {name}
                            </span>

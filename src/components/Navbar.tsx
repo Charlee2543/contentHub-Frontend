@@ -69,7 +69,7 @@ function Navbar() {
             <div className="flex items-center gap-8">
                <Link
                   href="/"
-                  className="btn flex items-center gap-3  text-white hover:text-[var(--green-btn)] hover:underline"
+                  className="btnc flex items-center gap-3  text-white hover:text-[var(--green-btn)] hover:underline"
                >
                   <FontAwesomeIcon className="h-[16px] " icon={faMugSaucer} />
                   <h2 className="w-fit  text-lg font-bold leading-tight tracking-[-0.015em]  ">
@@ -77,12 +77,12 @@ function Navbar() {
                   </h2>
                </Link>
                <div className="flex items-center gap-[30px]">
-                  <Link className="btn content-text   " href="/">
+                  <Link className="btnc content-text   " href="/">
                      <span className="hover:text-[var(--green-btn)] hover:underline">
                         Article
                      </span>
                   </Link>
-                  {/* <Link className="btn content-text cursor-pointer" href="/">
+                  {/* <Link className="btnc content-text cursor-pointer" href="/">
                      Contact Admin
                   </Link> */}
                </div>
@@ -95,24 +95,30 @@ function Navbar() {
                      className="relative w-fit  z-0"
                   >
                      <button
-                        className="btn z-30 login-btn-text py-2 px-6 rounded-[8px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]"
+                        className={`avatar avatar-placeholder `}
+                        //  z-30 login-btn-text py-2 px-6 rounded-[8px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]
                         onClick={() => setToggle((value) => !value)}
                      >
-                        {usernameLogin}
+                        <div className="relative  text-center align-middle rounded-full btnc login-btn-text w-[30px] h-[30px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]">
+                           <span className="absolute top-[0px] left-[7px]">
+                              {usernameLogin.charAt(0) +
+                                 usernameLogin.charAt(1)}
+                           </span>
+                        </div>
                      </button>
                      {toggle && (
-                        <div className="absolute -z-10 top-9 left-0 flex flex-col items-center pt-1 bg-[var(--forest-green)] w-full h-fit border-1 border-[var(--green-btn)] rounded-b-[8px] ">
-                           <button className="btn py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full ">
+                        <div className="absolute -z-10 top-[15px] right-[15px] flex flex-col items-center  bg-[var(--forest-green)] w-[140px] h-fit border-1 border-[var(--green-btn)] rounded-[8px]">
+                           <button className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-t-[8px]">
                               Profile
                            </button>
                            <button
-                              className="btn py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full "
+                              className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full "
                               onClick={refresh}
                            >
                               Refresh
                            </button>
                            <button
-                              className="btn py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-b-[8px]"
+                              className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-b-[8px]"
                               onClick={logout}
                            >
                               Logout
@@ -122,7 +128,7 @@ function Navbar() {
                   </div>
                ) : (
                   <button
-                     className="btn z-0 login-btn-text py-2 px-6 rounded-[8px] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]"
+                     className="btnc z-0 login-btn-text py-2 px-6 rounded-[8px] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]"
                      onClick={() => statusSetLogin()}
                   >
                      เข้าสูระบบ

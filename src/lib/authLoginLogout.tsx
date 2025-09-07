@@ -43,13 +43,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    // const [dataUserProfile, setDataUserProfile] = useState<>();
    // console.log("accessToken: ", accessToken);
 
-   // การตั้งค่าเปิดปิด login
-   const [statusLogin, setStatusLogin] = useState<LoginStatus>("login");
-   const [statusOpen, setStatusOpen] = useState<boolean>(false);
-
    const resetAccessToken = () => {
       setAccessToken(null);
    };
+   // การตั้งค่าเปิดปิด login
+   const [statusLogin, setStatusLogin] = useState<LoginStatus>("login");
+   const [statusOpen, setStatusOpen] = useState<boolean>(false);
 
    const login = async (email: string, password: string) => {
       try {
@@ -88,7 +87,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.log("res: ", res);
       if (!res.ok) {
          // ลบข้อมูลใน localstorage
-         RemoveUserProfile();
+         setAccessToken(null);
+         console.log("res.ok: non ok token ");
          return null;
       }
       // เช็ค UUID ใน localstorage ตรงกับ token ไหม ไม่ตรงให้แทนที่่

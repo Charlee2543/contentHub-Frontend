@@ -1,12 +1,14 @@
 "use client";
 import { use, useEffect, useState } from "react";
 import { useBlog } from "@/lib/BlogContext";
+import { useAuth } from "@/lib/authLoginLogout";
 import Image from "next/image";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import axios from "axios";
 import { postType } from "@/types/type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faHeart } from "@fortawesome/free-regular-svg-icons";
+import Loading from "@/components/ui/Loading";
 
 export default function Home({
    params,
@@ -15,6 +17,7 @@ export default function Home({
 }) {
    const [dataBlog, setDataBlog] = useState<postType>();
    // console.log("dataBlog: ", dataBlog);
+   const { api } = useAuth();
    const { blogs } = useBlog();
    const { idBolg } = use(params);
 
@@ -55,6 +58,17 @@ export default function Home({
          fetch();
       }
    }, [API_URL, blogs, dataBlog, objectParam.article_id]);
+
+   const sendComment = async () => {
+      console.log("sendComment: ");
+      try {
+         const res = await api.get(`${API_URL}/actionPost/`);
+         console.log("res: ", res);
+         // setDataBlog(res.data);
+      } catch (error) {
+         console.error("Error fetching posts:", error);
+      }
+   };
    if (dataBlog) {
       return (
          <div className="m-y-5 mx-[160px] flex flex-col ">
@@ -74,7 +88,7 @@ export default function Home({
                      src={dataBlog.picture}
                      alt={dataBlog.title}
                      fill={true}
-                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                     sizes="(max-width: 1200px) 100vw, 70vw "
                      // height={256}
                   />
                </div>
@@ -85,8 +99,13 @@ export default function Home({
                   {dataBlog.content}
                </p>
                <div className="flex tag-text w-[55%]  mx-7 gap-10 ">
-                  <div className="btn flex items-center gap-2 hover:text-red-500">
-                     <FontAwesomeIcon icon={faHeart} className="text-[24px] " />
+                  <div className="btnc flex items-center gap-2 hover:text-red-500">
+                     <button type="button" onClick={sendComment}>
+                        <FontAwesomeIcon
+                           icon={faHeart}
+                           className="text-[24px] "
+                        />
+                     </button>
                      <span>5</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -103,11 +122,8 @@ export default function Home({
       );
    } else {
       return (
-         <div className="feature-title flex justify-center items-center h-[80vh] w-[100vw] ">
-            Please Wait While Loading . . .
-            {/* <button className="btn" onClick={fetch}>
-               Fetch
-            </button> */}
+         <div>
+            <Loading />{" "}
          </div>
       );
    }

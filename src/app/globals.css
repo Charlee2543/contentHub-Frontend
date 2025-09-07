@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
    /* --background: #ffffff;
@@ -20,10 +21,19 @@
 }
 
 @theme inline {
-   --color-background: var(--background);
-   --color-foreground: var(--foreground);
+   --color-background: var(--dark-green);
+   --color-foreground: var(--pale-green);
    --font-sans: var(--font-Kanit-sans);
    --font-mono: var(--font-Kanit-mono);
+}
+
+html,
+body {
+   margin: 0;
+   padding: 0;
+   height: 100%;
+   width: 100%;
+   overflow-x: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -116,21 +126,21 @@ body {
    cursor: not-allowed;
    opacity: 0.7;
 }
-.btn {
+.btnc {
    transition: all 0.15s ease;
    cursor: pointer; /* เปลี่ยน cursor เมื่อชี้ */
 }
-.btn:hover {
+.btnc:hover {
    transform: scale(1.03); /* ขยายเล็กน้อย */
 }
 
 /* เมื่อกดปุ่ม */
-.btn:active {
+.btnc:active {
    transform: scale(0.98); /* ย่อเล็กน้อย */
 }
 
 /* ปุ่มไม่สามารถใช้งาน */
-.btn:disabled {
+.btnc:disabled {
    cursor: not-allowed;
    opacity: 0.7;
 }

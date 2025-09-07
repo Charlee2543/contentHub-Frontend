@@ -53,8 +53,9 @@ export default function Home() {
    }, [setBlogs]);
 
    return (
-      <main className="w-full flex justify-center">
+      <main className="w-full flex justify-center ">
          <div className="flex flex-col items-start w-full max-w-[960px] gap-[32px] mx-[160px] my-4   ">
+            <section></section>
             <InputText
                icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
                typeInput={"text"}
@@ -74,7 +75,7 @@ export default function Home() {
                         href={`/${blog.title}--${encodeURIComponent(
                            blog.article_id
                         )}`}
-                        className="relative btn w-[45%] h-full "
+                        className="relative btnc w-[45%] h-full "
                      >
                         <Image
                            className=" rounded-[8px] "
@@ -89,7 +90,7 @@ export default function Home() {
                            // height={256}
                         />
                      </Link>
-                     <div className="flex flex-col w-[55%] list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
+                     <div className="flex flex-col w-[55%] h-full list-inside list-decimal p-4 gap-1  text-sm/6 text-center sm:text-left ">
                         <p className="tag-text">Marketing</p>
                         <Link
                            href={`/${blog.title}--${encodeURIComponent(
@@ -99,8 +100,8 @@ export default function Home() {
                         >
                            {blog.title}
                         </Link>
-                        <div className="flex items-end justify-between">
-                           <p className="description-text w-fit">
+                        <div className="flex items-end justify-between truncate">
+                           <p className="description-text w-fit ">
                               {truncateText(blog.content, 200)}
                            </p>
                            <ButtonLink

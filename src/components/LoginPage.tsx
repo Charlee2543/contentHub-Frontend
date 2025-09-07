@@ -13,6 +13,7 @@ import {
 } from "@/lib/zodValidation";
 import { AxiosResponse, AxiosError } from "axios";
 import { useAuth } from "@/lib/authLoginLogout";
+import router from "next/router";
 
 type LoginStatus = "login" | "register" | null;
 
@@ -120,6 +121,7 @@ function LoginPage({
             password: "",
          });
          setStatusOpen(false);
+         router.reload();
       } else {
          const dataError = result as AxiosError<responseErrorTypeLogin>;
          if (dataError.response) {
@@ -201,7 +203,7 @@ function LoginPage({
                   className="flex flex-col justify-around items-center w-full h-full gap-4"
                >
                   <button
-                     className="btn absolute right-4 top-2 hover:text-red-400"
+                     className="btnc absolute right-4 top-2 hover:text-red-400"
                      onClick={closeLoginpage}
                   >
                      X
@@ -284,15 +286,11 @@ function LoginPage({
                      )}
                      <p className="tag-text">Forgot password?</p>
                   </div>
-                  <button
-                     type="submit"
-                     className=" button-link w-full mt-2"
-                     // onClick={() => declareLogin()}
-                  >
+                  <button type="submit" className=" button-link w-full mt-2">
                      Login
                   </button>
                   <button
-                     className=" btn tag-text "
+                     className=" btnc tag-text "
                      onClick={() => setStatusLogin("register")}
                   >
                      <p>Don ot have an account? Sign up</p>
@@ -318,7 +316,7 @@ function LoginPage({
                   className="flex flex-col justify-start items-center w-full gap-6 "
                >
                   <button
-                     className="btn absolute right-4 top-2 hover:text-red-400"
+                     className="btnc absolute right-4 top-2 hover:text-red-400"
                      onClick={closeLoginpage}
                   >
                      X
@@ -412,12 +410,12 @@ function LoginPage({
                         )}
                      </div>
                   </div>
-                  <div className="flex flex-col gap-2 w-full max-w-[400px]">
+                  <div className="flex flex-col gap-4 w-full max-w-[400px]">
                      <button type="submit" className=" button-link ">
                         Sign Up
                      </button>
                      <button
-                        className=" btn tag-text "
+                        className=" btnc tag-text "
                         onClick={() => setStatusLogin("login")}
                      >
                         <p>Already have an account? Log in</p>
