@@ -41,7 +41,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
    const [accessToken, setAccessToken] = useState<string | null>(null);
    // const [dataUserProfile, setDataUserProfile] = useState<>();
-   console.log("accessToken: ", accessToken);
+   // console.log("accessToken: ", accessToken);
 
    const resetAccessToken = () => {
       setAccessToken(null);
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       Cookies.remove("refresh", { path: "/", domain: "localhost" });
       resetAccessToken();
       localStorage.removeItem("userProfile");
-      // window.location.reload();
+      window.location.reload();
    };
 
    const api = buildApi(() => accessToken, refresh);

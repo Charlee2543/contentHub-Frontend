@@ -38,7 +38,7 @@ export const CommentsSection: React.FC<CommentsSectionProps> = ({
 
    if (loading) {
       return (
-         <div className="bg-gray-800 rounded-lg p-6">
+         <div className="bg-[var(--dark-green)] rounded-lg p-6">
             <div className="text-center py-8">
                <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>
                <p className="mt-2 text-gray-400">Loading comments...</p>
@@ -49,7 +49,7 @@ export const CommentsSection: React.FC<CommentsSectionProps> = ({
 
    if (error) {
       return (
-         <div className="bg-gray-800 rounded-lg p-6">
+         <div className="bg-[var(--dark-green) rounded-lg p-6">
             <div className="text-center py-8 text-red-400">
                <p>Error loading comments: {error}</p>
             </div>
