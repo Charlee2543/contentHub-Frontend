@@ -36,30 +36,18 @@ function Navbar() {
    const [usernameLogin, setUsernameLogin] = useState<string>("unknown user");
    useEffect(() => {
       let dataUserLocalstorage = null;
-      try {
-         const userData = localStorage.getItem("userProfile");
-         if (userData) {
+      const userData = localStorage.getItem("userProfile");
+      if (userData) {
+         try {
             dataUserLocalstorage = JSON.parse(userData);
             if (dataUserLocalstorage.username) {
                setUsernameLogin(dataUserLocalstorage.username);
+               setLoginSuccessful(true);
             }
-            setLoginSuccessful(true);
-
-            // try {
-            //    accessToken
-            //    // จะเช็คว่ามี accessToken ไหม
-            // } catch (error) {
-            //    console.log("Token expired : " + error);
-            //    setLoginSuccessful(false);
-            // }
-         } else {
-            // กรณีที่ข้อมูลใน localStorage เสียหายหรือไม่ใช่ JSON
-            console.error("Failed to parse user data from localStorage");
+         } catch (error) {
+            console.log("Failed to parse user data from localStorage", error);
             setLoginSuccessful(false);
          }
-      } catch (error) {
-         console.log("not login : " + error);
-         setLoginSuccessful(false);
       }
    }, [, accessToken]);
 

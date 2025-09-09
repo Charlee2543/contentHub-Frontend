@@ -9,19 +9,39 @@ import { postType } from "@/types/type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faHeart } from "@fortawesome/free-regular-svg-icons";
 import Loading from "@/components/ui/Loading";
+import { datePassed } from "@/lib/datetime";
+import { CommentsSection } from "@/components/CommentSection";
 
 export default function Home({
    params,
 }: {
    params: Promise<{ idBolg: string }>;
 }) {
+   const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
    const [dataBlog, setDataBlog] = useState<postType>();
-   // console.log("dataBlog: ", dataBlog);
+   console.log("dataBlog: ", dataBlog);
+   const datePass = dataBlog?.created_at ?? null;
+   const updateAt = dataBlog?.updated_at ?? null;
+   console.log("dataBlog?.updated_at: ", dataBlog?.updated_at);
    const { api } = useAuth();
    const { blogs } = useBlog();
    const { idBolg } = use(params);
 
-   const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
+   const [usernameLogin, setUsernameLogin] = useState<string>("unknown user");
+   useEffect(() => {
+      let dataUserLocalstorage = null;
+      const userData = localStorage.getItem("userProfile");
+      if (userData) {
+         try {
+            dataUserLocalstorage = JSON.parse(userData);
+            if (dataUserLocalstorage.username) {
+               setUsernameLogin(dataUserLocalstorage.username);
+            }
+         } catch (error) {
+            console.log("Failed to parse user data from localStorage", error);
+         }
+      }
+   }, [,]);
 
    const decodeParam = decodeURIComponent(idBolg);
    const splitParam = decodeParam.split("--");
@@ -78,8 +98,12 @@ export default function Home({
                className=" w-full h-fit flex flex-col justify-start items-start "
             >
                <h1 className="feature-title mt-5 mx-4">{dataBlog.title}</h1>
-               <p className="tag-text my-3 mx-4">
-                  Published by Olivia Harper · 2 days ago test ๆ
+               <p className="tag-text mt-3 m-b1 mx-4">
+                  Published by {dataBlog.author_username} ·
+                  {datePass ? datePassed(datePass) : "DD/MM/YY"}
+               </p>{" "}
+               <p className="tag-text mb-4 mx-4">
+                  Updated :{updateAt ? "  " + datePassed(updateAt) : "DD/MM/YY"}
                </p>
                <div className="relative w-full h-[60vh] max-h-[650px]">
                   <Image
@@ -117,7 +141,16 @@ export default function Home({
                   </div>
                </div>
             </section>
-            <section className="feature-title">comments</section>
+            <section>
+               <p className="feature-title mt-8">Comments</p>
+               <CommentsSection
+                  articleId={objectParam.article_id}
+                  currentUserInitial={
+                     usernameLogin.charAt(0).toUpperCase() +
+                     usernameLogin.charAt(1)
+                  }
+               />
+            </section>
          </div>
       );
    } else {

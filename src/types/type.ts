@@ -9,6 +9,7 @@ export interface postType {
    created_at: Date;
    likes_count: number;
    author: UUID;
+   author_username: string;
 }
 export interface dataRegisterType {
    username: string;
@@ -37,4 +38,23 @@ export interface userToken {
 export interface dataLoginType {
    email: string;
    password: string;
+}
+
+export interface ArticleComment {
+   id: number;
+   article: number;
+   user: userProfile;
+   parent: number | null;
+   content: string;
+   status: string;
+   created_at: string;
+   updated_at: string;
+   replies_count: number;
+   replies: ArticleComment[];
+}
+
+export interface CommentCreate {
+   article: number;
+   parent?: number;
+   content: string;
 }

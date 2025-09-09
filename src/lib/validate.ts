@@ -19,7 +19,7 @@ export const RemoveUserProfile = () => {
    localStorage.removeItem("userProfile");
    Cookies.remove("refresh");
    console.log("RemoveUserProfile ");
-   window.location.reload();
+   // window.location.reload();
 };
 
 export const CheckRefreshtoken = () => {
