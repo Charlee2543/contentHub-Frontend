@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { RemoveUserProfile } from "./validate";
 const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
 
 export function buildApi(
@@ -39,11 +38,11 @@ export function buildApi(
                originalRequest.headers["Authorization"] = `Bearer ${newAccess}`;
                return api(originalRequest);
             } else {
-               // RemoveUserProfile();
                console.log("reject refreshToken");
+               localStorage.removeItem("userProfile");
+               Cookies.remove("refresh");
                alert("token หมดอายุ โปรด login ใหม่");
-               // localStorage.removeItem("userProfile");
-               // Cookies.remove("refresh");
+               window.location.reload();
             }
          }
          return Promise.reject(error);
