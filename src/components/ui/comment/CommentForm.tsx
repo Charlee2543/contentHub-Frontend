@@ -1,4 +1,6 @@
+import { getUserLocalStorage } from "@/lib/getUserLocalStorage";
 import React, { useState } from "react";
+import Image from "next/image";
 
 interface CommentFormProps {
    onSubmit: (content: string) => Promise<void>;
@@ -34,15 +36,26 @@ export const CommentForm: React.FC<CommentFormProps> = ({
          setLoading(false);
       }
    };
+   const userProfile = getUserLocalStorage();
 
    return (
       <div className={`flex items-start gap-3 ${isReply ? "ml-12 mt-3" : ""}`}>
          {/* User Avatar */}
          <div className="flex-shrink-0">
             <div className="w-8 h-8 bg-[var(--mint-green)] rounded-full flex items-center justify-center">
-               <span className="text-[16px] font-semibold text-[var(--forest-green)]">
-                  {userInitial}
-               </span>
+               {userProfile ? (
+                  <Image
+                     className="rounded-full"
+                     src={userProfile.profile_picture_url}
+                     alt={userProfile.username}
+                     width={30}
+                     height={30}
+                  ></Image>
+               ) : (
+                  <span className="text-[16px] font-semibold text-[var(--forest-green)]">
+                     {userInitial}
+                  </span>
+               )}
             </div>
          </div>
 

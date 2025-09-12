@@ -5,9 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMugSaucer } from "@fortawesome/free-solid-svg-icons";
 import { ClickTocloseElement } from "@/lib/ClickTocloseElement";
 // import { useRouter } from "next/navigation";
-
+import Image from "next/image";
 import LoginPage from "./LoginPage";
 import { useAuth } from "@/lib/authLoginLogout";
+import { getUserLocalStorage } from "@/lib/getUserLocalStorage";
+import { userProfile } from "@/types/type";
 function Navbar() {
    const {
       logout,
@@ -33,21 +35,21 @@ function Navbar() {
 
    // เช็คว่าเคย login ไหม
    const [loginSuccessful, setLoginSuccessful] = useState<boolean>(false);
-   const [usernameLogin, setUsernameLogin] = useState<string>("unknown user");
+   const [usernameLogin, setUsernameLogin] = useState<userProfile>();
    useEffect(() => {
-      let dataUserLocalstorage = null;
-      const userData = localStorage.getItem("userProfile");
-      if (userData) {
-         try {
-            dataUserLocalstorage = JSON.parse(userData);
-            if (dataUserLocalstorage.username) {
-               setUsernameLogin(dataUserLocalstorage.username);
-               setLoginSuccessful(true);
-            }
-         } catch (error) {
-            console.log("Failed to parse user data from localStorage", error);
-            setLoginSuccessful(false);
+      // let dataUserLocalstorage = null;
+      // const userData = localStorage.getItem("userProfile");
+
+      try {
+         // dataUserLocalstorage = JSON.parse(userData);
+         const dataUserLocalstorage = getUserLocalStorage();
+         if (dataUserLocalstorage) {
+            setUsernameLogin(dataUserLocalstorage);
+            setLoginSuccessful(true);
          }
+      } catch (error) {
+         console.log("Failed to parse user data from localStorage", error);
+         setLoginSuccessful(false);
       }
    }, []);
 
@@ -89,13 +91,26 @@ function Navbar() {
                      >
                         {/* text-center align-middle  */}
                         <div className="btnc login-btn-text relative flex items-center justify-centers h-fit min-h-[30px] rounded-full bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]">
-                           <span
-                           // className="absolute top-[0px] left-[7px]"
-                           // className="border"
-                           >
-                              {usernameLogin.charAt(0).toUpperCase() +
-                                 usernameLogin.charAt(1)}
-                           </span>
+                           {usernameLogin ? (
+                              usernameLogin.profile_picture_url ? (
+                                 <Image
+                                    className="rounded-full"
+                                    src={usernameLogin.profile_picture_url}
+                                    alt={usernameLogin.username}
+                                    width={30}
+                                    height={30}
+                                 ></Image>
+                              ) : (
+                                 <span>
+                                    {usernameLogin.username
+                                       .charAt(0)
+                                       .toUpperCase() +
+                                       usernameLogin.username.charAt(1)}
+                                 </span>
+                              )
+                           ) : (
+                              <span>{"Un"}</span>
+                           )}
                         </div>
                      </button>
                      {/* {toggle && ( */}
