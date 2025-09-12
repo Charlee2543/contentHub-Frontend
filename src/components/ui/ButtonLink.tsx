@@ -2,7 +2,7 @@
 
 import React from "react";
 interface buttonLinkType {
-   functionOut: () => void;
+   onClick: () => void;
    textButton: string;
    paddinXY: string;
    stlyeTailwind?: string;
@@ -11,7 +11,7 @@ interface buttonLinkType {
 }
 
 function ButtonLink({
-   functionOut,
+   onClick,
    stlyeTailwind,
    textButton,
    paddinXY,
@@ -21,7 +21,7 @@ function ButtonLink({
    // function , ความกว้าง , background color text
    return (
       <button
-         onClick={functionOut}
+         onClick={onClick}
          style={{
             backgroundColor: bgColor ?? "",
             padding: paddinXY,

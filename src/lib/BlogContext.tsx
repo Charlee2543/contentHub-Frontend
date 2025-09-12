@@ -16,7 +16,7 @@ type BlogContextType = {
 };
 
 const BlogContext = createContext<BlogContextType | undefined>(undefined);
-
+// เก็บข้อมูล blog ทั้งหมดที่ load ไว้มี context
 export const BlogProvider = ({ children }: { children: ReactNode }) => {
    const [blogs, setBlogs] = useState<postType[]>([]);
    // console.log("blogs: ", blogs);
