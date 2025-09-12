@@ -13,7 +13,7 @@ import {
 } from "@/lib/zodValidation";
 import { AxiosResponse, AxiosError } from "axios";
 import { useAuth } from "@/lib/authLoginLogout";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import { ClickTocloseElement } from "@/lib/ClickTocloseElement";
 
 type LoginStatus = "login" | "register" | null;
@@ -57,9 +57,10 @@ function LoginPage({
    //    email: "",
    //    password: "",
    // });
+   const router = useRouter();
    const { login } = useAuth();
    const [errorAlertLogin, setErrorAlertLogin] = useState<boolean>(false);
-
+   const [loading, setLoading] = useState<boolean>(false);
    // เก็บ data ของ register
    const {
       register,
@@ -95,6 +96,7 @@ function LoginPage({
       // try {
       // แก้ให้ status 201 ถึงไปหน้า login
       setStatusOpen(true);
+      setLoading(true);
       const result = await login(dataLogin.email, dataLogin.password);
       console.log("success login:", result);
       const dataUser = result as unknown as AxiosResponse<userProfile>;
@@ -104,15 +106,19 @@ function LoginPage({
             email: "",
             password: "",
          });
+         setLoading(false);
          setStatusOpen(false);
-         router.reload();
+         // router.refresh();
+         // window.location.reload();
       } else {
          const dataError = result as AxiosError<responseErrorTypeLogin>;
+         setLoading(false);
          if (dataError.response) {
             console.log(
                "dataError: ",
                dataError.response.data.non_field_errors
             );
+
             alert(
                `error login \n${dataError.response.data.non_field_errors.join(
                   "\n"
@@ -122,30 +128,13 @@ function LoginPage({
             console.error("Unexpected error:", dataError);
          }
       }
-      // } catch (error) {
-      //    console.error("Error login:", error);
-      //    const responseError = error as AxiosError<responseErrorTypeLogin>;
-      //    setErrorAlertLogin(true);
-      //    if (responseError.response) {
-      //       console.log(
-      //          "responseError: ",
-      //          responseError.response.data.non_field_errors
-      //       );
-      //       alert(
-      //          `error login \n${responseError.response.data.non_field_errors.join(
-      //             "\n"
-      //          )}`
-      //       );
-      //    } else {
-      //       console.error("Unexpected error:", error);
-      //    }
-      // }
    };
 
    // การเปลียนค่า register
    const declareRegisterUp = async (dataRegister: dataRegisterType) => {
       try {
          // แก้ให้ status 201 ถึงไปหน้า login
+         setLoading(true);
          setStatusOpen(true);
          const result = await registerApi(dataRegister);
          console.log("success register:", result);
@@ -157,11 +146,13 @@ function LoginPage({
                password: "",
                confirmPassword: "",
             });
+            setLoading(false);
             setStatusLogin("login");
          }
       } catch (error) {
          console.error("Error register:", error);
          const responseError = error as AxiosError<responseErrorTyperegister>;
+         setLoading(false);
          if (responseError.response) {
             const data = responseError.response.data;
             console.log("responseError: ", responseError.response.data);
@@ -204,7 +195,6 @@ function LoginPage({
                      <p>Email</p>
 
                      <label
-                        tabIndex={0}
                         className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
                                     focus:outline-none focus-within:border-1 focus-within:border-[var(--pale-green)] w-full max-w-[400px]  
                                     ${
@@ -236,7 +226,6 @@ function LoginPage({
                      <p>Password</p>
 
                      <label
-                        tabIndex={0}
                         className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
                                     focus:outline-none focus-within:border-1 focus-within:border-[var(--pale-green)] w-full max-w-[400px]  
                                     ${
@@ -255,7 +244,7 @@ function LoginPage({
                            }}
                            onBlur={loginRegister("password").onBlur}
                            placeholder={"password"}
-                           className="w-full content-text placeholder:description-text focus:outline-0 "
+                           className="w-full content-text placeholder:description-text focus:outline-0"
                         />
                      </label>
                      {loginErrors.password && (
@@ -266,7 +255,12 @@ function LoginPage({
                      <p className="tag-text">Forgot password?</p>
                   </div>
                   <button type="submit" className=" button-link w-full mt-2">
-                     Login
+                     Login{" "}
+                     {loading ? (
+                        <span className="loading loading-dots loading-sm indent-8 ml-1"></span>
+                     ) : (
+                        ""
+                     )}
                   </button>
                   <button
                      className=" btnc tag-text "
@@ -291,7 +285,6 @@ function LoginPage({
                   <div className="flex flex-col gap-3 mb- w-full max-w-[350px] ">
                      <div>
                         <label
-                           tabIndex={0}
                            className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
             focus:outline-none focus-within:border-1 focus-within:border-[var(--pale-green)] w-full max-w-[400px]  `}
                         >
@@ -312,7 +305,6 @@ function LoginPage({
                      </div>
                      <div>
                         <label
-                           tabIndex={0}
                            className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
             focus:outline-none focus-within:border-1 focus-within:border-[var(--pale-green)] w-full max-w-[400px]  `}
                         >
@@ -333,7 +325,6 @@ function LoginPage({
                      </div>
                      <div>
                         <label
-                           tabIndex={0}
                            className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
             focus:outline-none focus-within:border-1 focus-within:border-[var(--pale-green)] w-full max-w-[400px]  `}
                         >
@@ -355,7 +346,6 @@ function LoginPage({
                      </div>
                      <div>
                         <label
-                           tabIndex={0}
                            className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
             focus:outline-none focus-within:border-1 focus-within:border-[var(--pale-green)] w-full max-w-[400px]  `}
                         >
@@ -378,7 +368,12 @@ function LoginPage({
                   </div>
                   <div className="flex flex-col gap-4 w-full max-w-[400px]">
                      <button type="submit" className=" button-link ">
-                        Sign Up
+                        Sign Up{" "}
+                        {loading ? (
+                           <span className="loading loading-dots loading-sm indent-8 ml-1"></span>
+                        ) : (
+                           ""
+                        )}
                      </button>
                      <button
                         className=" btnc tag-text "

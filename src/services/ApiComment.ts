@@ -18,11 +18,9 @@ export const ApiComment = () => {
             dataUserLocalstorage = JSON.parse(userData);
             if (dataUserLocalstorage.user_id) {
                setUserIdLogin(dataUserLocalstorage.user_id);
-               // setLoginSuccessful(true);
             }
          } catch (error) {
             console.error("Failed to parse user data from localStorage", error);
-            // setLoginSuccessful(false);
          }
       }
    }, []);
@@ -35,7 +33,7 @@ export const ApiComment = () => {
          const response = await axios.get<ArticleComment[]>(
             `${API_URL}/commentPost/?article_id=${articleId}`
          );
-         console.log("response getCommentsByArticle : ", response);
+         // console.log("response getCommentsByArticle : ", response);
          return response.data;
       } catch (error) {
          console.error(" getCommentsByArticle error: ", error);

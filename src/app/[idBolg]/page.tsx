@@ -19,7 +19,7 @@ export default function Home({
 }) {
    const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
    const [dataBlog, setDataBlog] = useState<postType>();
-   console.log("page[id post] dataBlog: ", dataBlog);
+   // console.log("page[id post] dataBlog: ", dataBlog);
    const datePass = dataBlog?.created_at ?? null;
    const updateAt = dataBlog?.updated_at ?? null;
    const { api } = useAuth();

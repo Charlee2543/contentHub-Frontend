@@ -26,7 +26,7 @@ export const CommentsSection: React.FC<CommentsSectionProps> = ({
       setOneTimeLoad(true);
    }, [setOneTimeLoad]);
 
-   console.log("comments: ", comments);
+   // console.log("comments: ", comments);
    const handleNewComment = async (content: string) => {
       await addComment({ article: articleId, content });
    };

@@ -5,7 +5,7 @@ import InputText from "../components/ui/InputText";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { postType } from "@/types/type";
 import axios from "axios";
 import { useBlog } from "@/lib/BlogContext";

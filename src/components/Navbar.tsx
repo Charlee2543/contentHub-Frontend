@@ -12,6 +12,7 @@ import { getUserLocalStorage } from "@/lib/getUserLocalStorage";
 import { userProfile } from "@/types/type";
 function Navbar() {
    const {
+      accessToken,
       logout,
       refresh,
       statusOpen,
@@ -43,15 +44,18 @@ function Navbar() {
       try {
          // dataUserLocalstorage = JSON.parse(userData);
          const dataUserLocalstorage = getUserLocalStorage();
+         setToggle(false);
          if (dataUserLocalstorage) {
             setUsernameLogin(dataUserLocalstorage);
             setLoginSuccessful(true);
+         } else {
+            setLoginSuccessful(false);
          }
       } catch (error) {
          console.log("Failed to parse user data from localStorage", error);
          setLoginSuccessful(false);
       }
-   }, []);
+   }, [loginSuccessful, accessToken]);
 
    return (
       <div className="sticky top-0 z-30 w-full">

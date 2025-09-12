@@ -8,15 +8,15 @@ export const useComments = (articleId: number) => {
    const [error, setError] = useState<string | null>(null);
    const { createComment, replyToComment, getCommentsByArticle } = ApiComment();
    const [oneTimeLoad, setOneTimeLoad] = useState<boolean>(false);
-   console.log("oneTimeLoad: ", oneTimeLoad);
+   // console.log("oneTimeLoad: ", oneTimeLoad);
 
    useEffect(() => {
       const fetchComments = async () => {
-         console.log("comments.length: ", comments.length);
+         // console.log("comments.length: ", comments.length);
          if (comments.length === 0 && oneTimeLoad) {
             setOneTimeLoad(false);
             try {
-               console.log("useComments  getCommentsByArticle ");
+               // console.log("useComments  getCommentsByArticle ");
                setLoading(true);
                //  ดึงข้อมูลจาก server
                const data = await getCommentsByArticle(articleId);
@@ -30,7 +30,7 @@ export const useComments = (articleId: number) => {
                setLoading(false);
             }
          } else {
-            console.log("There is already comments information. ");
+            // console.log("There is already comments information. ");
          }
       };
       if (articleId) {

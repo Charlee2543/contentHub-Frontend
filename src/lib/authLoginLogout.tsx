@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       Cookies.remove("refresh", { path: "/", domain: "localhost" });
       resetAccessToken();
       localStorage.removeItem("userProfile");
-      window.location.reload();
+      // window.location.reload();
    };
 
    const api = buildApi(() => accessToken, refresh);
