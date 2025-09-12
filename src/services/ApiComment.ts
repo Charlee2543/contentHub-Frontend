@@ -1,10 +1,31 @@
 import { useAuth } from "@/lib/authLoginLogout";
 import { CommentCreate, ArticleComment } from "@/types/type";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export const ApiComment = () => {
    const { api } = useAuth();
    const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
+
+   // หา id user
+   const [userIdLogin, setUserIdLogin] = useState<string>("unknown user");
+
+   useEffect(() => {
+      let dataUserLocalstorage = null;
+      const userData = localStorage.getItem("userProfile");
+      if (userData) {
+         try {
+            dataUserLocalstorage = JSON.parse(userData);
+            if (dataUserLocalstorage.user_id) {
+               setUserIdLogin(dataUserLocalstorage.user_id);
+               // setLoginSuccessful(true);
+            }
+         } catch (error) {
+            console.error("Failed to parse user data from localStorage", error);
+            // setLoginSuccessful(false);
+         }
+      }
+   }, []);
 
    async function getCommentsByArticle(
       articleId: number
@@ -22,26 +43,33 @@ export const ApiComment = () => {
       }
    }
 
-   async function createComment(data: CommentCreate): Promise<ArticleComment> {
+   async function createComment(data: CommentCreate): // Promise<string>
+   Promise<ArticleComment> {
+      console.log("API createComment data: ", data);
       const response = await api.post<ArticleComment>(
          `${API_URL}/commentPost/`,
-         data
+         { ...data, user: userIdLogin }
       );
       return response.data;
+      // return "completed createComment";
    }
 
    async function replyToComment(
       parentId: number,
-      content: string
-   ): Promise<ArticleComment> {
+      content: string,
+      article: number
+   ): //  Promise<string>
+   Promise<ArticleComment> {
       const response = await api.post<ArticleComment>(
          `${API_URL}/commentPost/${parentId}/reply/`,
          {
-            method: "POST",
-            body: JSON.stringify({ content }),
+            content,
+            article: article,
+            user: userIdLogin,
          }
       );
       return response.data;
+      // return "completed replyToComment";
    }
 
    // setToken(token: string) {

@@ -30,7 +30,7 @@ export default function RootLayout({
       <html lang="en">
          <AuthProvider>
             <BlogProvider>
-               <body className={`${kanitSans.variable} `}>{children}</body>
+               <body className={`${kanitSans.variable}`}>{children}</body>
             </BlogProvider>
          </AuthProvider>
       </html>

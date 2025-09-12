@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { ArticleComment } from "@/types/type";
-
+import Image from "next/image";
 import { CommentForm } from "./CommentForm";
+import { datePassed } from "@/lib/datetime";
 
 interface CommentItemProps {
    comment: ArticleComment;
-   onReply: (parentId: number, content: string) => Promise<ArticleComment>;
+   onReply: (
+      parentId: number,
+      content: string,
+      article: number
+   ) => Promise<ArticleComment>;
    isReply?: boolean;
    currentUserInitial?: string;
+   article: number;
 }
 
 export const CommentItem: React.FC<CommentItemProps> = ({
@@ -15,46 +21,37 @@ export const CommentItem: React.FC<CommentItemProps> = ({
    onReply,
    isReply = false,
    currentUserInitial = "gr",
+   article,
 }) => {
    const [showReplyForm, setShowReplyForm] = useState(false);
 
    const handleReply = async (content: string) => {
-      await onReply(comment.id, content);
+      await onReply(comment.id, content, article);
       setShowReplyForm(false);
    };
 
-   const formatTimeAgo = (dateString: string) => {
-      const now = new Date();
-      const commentDate = new Date(dateString);
-      const diffInSeconds = Math.floor(
-         (now.getTime() - commentDate.getTime()) / 1000
-      );
-
-      if (diffInSeconds < 60) return "just now";
-      if (diffInSeconds < 3600)
-         return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-      if (diffInSeconds < 86400)
-         return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-      return `${Math.floor(diffInSeconds / 86400)} days ago`;
-   };
-
-   const getDisplayName = (user: ArticleComment["user"]) => {
+   const getDisplayName = (username: string) => {
       // const fullName = `${user.first_name} ${user.last_name}`.trim();
-      if (user.username) {
-         return user.username;
+      if (username) {
+         return username;
       }
       return null;
    };
 
-   const getUserInitial = (user: ArticleComment["user"]) => {
+   // ทำ icon หน้าชื่อ user
+   const getUserInitial = (user: string) => {
       const displayName = getDisplayName(user);
       if (displayName) {
-         return displayName.charAt(0).toUpperCase();
+         // const
+         return (
+            displayName.charAt(0).toUpperCase() +
+            displayName.substring(1, displayName.length)
+         );
       }
       return null;
    };
 
-   const usernameComment = getUserInitial(comment.user);
+   const usernameComment = getUserInitial(comment.username);
    // const getAvatarColor = (userId: UUID) => {
    //    // Different colors based on user ID
    //    const colors = [
@@ -73,17 +70,25 @@ export const CommentItem: React.FC<CommentItemProps> = ({
             {/* User Avatar */}
             <div className="flex-shrink-0">
                <div
-                  className={`relative  text-center align-middle rounded-full login-btn-text w-[30px] h-[30px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]`}
+                  className={`relative flex justify-center items-center text-center align-middle rounded-full login-btn-text w-[30px] h-[30px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]`}
                   // ${getAvatarColor(comment.user.user_id )}
                >
-                  <span className="absolute top-[0px] left-[7px]">
-                     {usernameComment
-                        ? usernameComment.charAt(0) + usernameComment.charAt(1)
-                        : "Gr"}
-                  </span>
-                  {/* <p className="text-sm font-medium text-white">
-                     {usernameComment ? usernameComment : "username"}
-                  </p> */}
+                  {comment.picture ? (
+                     <Image
+                        className="rounded-full"
+                        src={comment.picture}
+                        alt={usernameComment ? usernameComment : "username"}
+                        width={30}
+                        height={30}
+                     ></Image>
+                  ) : (
+                     <span className="">
+                        {usernameComment
+                           ? usernameComment.charAt(0) +
+                             usernameComment.charAt(1)
+                           : "Gr"}
+                     </span>
+                  )}
                </div>
             </div>
 
@@ -91,13 +96,11 @@ export const CommentItem: React.FC<CommentItemProps> = ({
             <div className="flex-1">
                <div className="flex items-center gap-2 mb-1">
                   <span className="text-white font-medium">
-                     {comment.user.username
-                        ? getDisplayName(comment.user)
-                        : "username"}
+                     {usernameComment ? usernameComment : "username"}
                      {}
                   </span>
                   <span className="text-gray-400 text-sm">
-                     {formatTimeAgo(comment.created_at)}
+                     {datePassed(comment.created_at)}
                   </span>
                   {comment.user.username === "olivia_harper" && (
                      <span className="text-xs bg-gray-600 text-gray-300 px-2 py-1 rounded">

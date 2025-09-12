@@ -51,10 +51,14 @@ export interface ArticleComment {
    updated_at: string;
    replies_count: number;
    replies: ArticleComment[];
+   username: string;
+   picture: string;
+   user_id: UUID;
 }
 
 export interface CommentCreate {
    article: number;
+   // user: UUID;
    parent?: number;
    content: string;
 }

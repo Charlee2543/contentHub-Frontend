@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!res.ok) {
          // ลบข้อมูลใน localstorage
          setAccessToken(null);
-         console.log("res.ok: non ok token ");
+         console.log("resno nok: non ok token ");
          return null;
       }
       // เช็ค UUID ใน localstorage ตรงกับ token ไหม ไม่ตรงให้แทนที่่

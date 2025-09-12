@@ -14,6 +14,7 @@ import {
 import { AxiosResponse, AxiosError } from "axios";
 import { useAuth } from "@/lib/authLoginLogout";
 import router from "next/router";
+import { ClickTocloseElement } from "@/lib/ClickTocloseElement";
 
 type LoginStatus = "login" | "register" | null;
 
@@ -56,7 +57,7 @@ function LoginPage({
    //    email: "",
    //    password: "",
    // });
-   const { login, refresh, logout, accessToken } = useAuth();
+   const { login } = useAuth();
    const [errorAlertLogin, setErrorAlertLogin] = useState<boolean>(false);
 
    // เก็บ data ของ register
@@ -85,32 +86,15 @@ function LoginPage({
    };
 
    const modalRef = useRef<HTMLDivElement>(null);
-   useEffect(() => {
-      const closePage = () => {
-         setStatusOpen(false);
-      };
 
-      // handler สำหรับตรวจจับการคลิก
-      const handleClickOutside = (event: MouseEvent) => {
-         if (
-            modalRef.current &&
-            !modalRef.current.contains(event.target as Node) // ดูว่าหากการคลิกเมาร์ไม่ตรงกับกรอบที่ ref ไว้ให้ declare function
-         ) {
-            closePage(); // ถ้าคลิกนอก modal → ปิด
-         }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-         document.removeEventListener("mousedown", handleClickOutside);
-      };
-   }, [setStatusOpen]);
+   ClickTocloseElement(modalRef, setStatusOpen);
 
    // การเปลี่ยนค่า login
 
    const declareLoginWeb = async (dataLogin: dataLoginType) => {
       // try {
       // แก้ให้ status 201 ถึงไปหน้า login
+      setStatusOpen(true);
       const result = await login(dataLogin.email, dataLogin.password);
       console.log("success login:", result);
       const dataUser = result as unknown as AxiosResponse<userProfile>;
@@ -162,6 +146,7 @@ function LoginPage({
    const declareRegisterUp = async (dataRegister: dataRegisterType) => {
       try {
          // แก้ให้ status 201 ถึงไปหน้า login
+         setStatusOpen(true);
          const result = await registerApi(dataRegister);
          console.log("success register:", result);
          if (result.status === 201) {
@@ -191,14 +176,20 @@ function LoginPage({
       }
    };
 
-   return statusOpen ? (
-      <div className="absolute z-2 w-[100vw] h-[100vh] overflow-clip bg-[#3d3d3d69] flex items-start justify-center">
+   // return  statusOpen ?
+   return (
+      <div
+         className={`transition-all transition-discrete ${
+            statusOpen ? " flex opacity-100 " : " hidden opacity-0 "
+         } absolute z-20 w-[100vw] h-[100vh] overflow-clip bg-[#3d3d3d69]   border border-orange-700 items-start justify-center  `}
+      >
          <section
             ref={modalRef}
-            className="relative w-full max-w-[480px] h-[400px]  mt-10 px-8 py-5 bg-[var(--dark-green)] rounded-lg shadow-lg "
+            className="relative w-full max-w-[480px] min-h-[400px]  mt-10 px-8 py-5 bg-[var(--dark-green)] rounded-lg shadow-lg "
          >
             {statusLogin === "login" ? (
                <form
+                  method="post"
                   onSubmit={handleLoginSubmit(declareLoginWeb)}
                   className="flex flex-col justify-around items-center w-full h-full gap-4"
                >
@@ -211,13 +202,7 @@ function LoginPage({
                   <h1 className="feature-title text-center">Welcome back</h1>
                   <div className=" w-full max-w-[400px]">
                      <p>Email</p>
-                     {/* <InputText
-                        typeInput={"email"}
-                        valueText={dataLogin.email}
-                        setValueText={changeLoginEmail}
-                        placeholder={"email"}
-                        stlyeTailwind="w-full  my-2"
-                     /> */}
+
                      <label
                         tabIndex={0}
                         className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
@@ -249,13 +234,7 @@ function LoginPage({
                   </div>
                   <div className=" w-full max-w-[400px]">
                      <p>Password</p>
-                     {/* <InputText
-                        typeInput={"Password"}
-                        valueText={dataLogin.password}
-                        setValueText={changeLoginPassword}
-                        placeholder={"Password"}
-                        stlyeTailwind="w-full  my-2"
-                     /> */}
+
                      <label
                         tabIndex={0}
                         className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
@@ -295,25 +274,12 @@ function LoginPage({
                   >
                      <p>Don ot have an account? Sign up</p>
                   </button>
-                  {/* <button
-                     type="button"
-                     className=" button-link w-full mt-2"
-                     onClick={() => logout()}
-                  >
-                     Logout
-                  </button>
-                  <button
-                     type="button"
-                     className=" button-link w-full mt-2"
-                     onClick={() => refresh()}
-                  >
-                     Refresh
-                  </button> */}
                </form>
             ) : statusLogin === "register" ? (
                <form
                   onSubmit={handleSubmit(declareRegisterUp)}
-                  className="flex flex-col justify-start items-center w-full gap-6 "
+                  method="post"
+                  className="flex flex-col justify-start items-center w-full h-fit gap-6 "
                >
                   <button
                      className="btnc absolute right-4 top-2 hover:text-red-400"
@@ -427,9 +393,10 @@ function LoginPage({
             )}
          </section>
       </div>
-   ) : (
-      <div></div>
    );
+   // : (
+   //    <div></div>
+   // );
 }
 
 export default LoginPage;

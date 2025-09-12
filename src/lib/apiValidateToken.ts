@@ -38,12 +38,14 @@ export function buildApi(
                console.log("newAccess: ", newAccess);
                originalRequest.headers["Authorization"] = `Bearer ${newAccess}`;
                return api(originalRequest);
+            } else {
+               // RemoveUserProfile();
+               console.log("reject refreshToken");
+               alert("token หมดอายุ โปรด login ใหม่");
+               // localStorage.removeItem("userProfile");
+               // Cookies.remove("refresh");
             }
          }
-         RemoveUserProfile();
-         console.log("reject refreshToken");
-         // localStorage.removeItem("userProfile");
-         // Cookies.remove("refresh");
          return Promise.reject(error);
       }
    );

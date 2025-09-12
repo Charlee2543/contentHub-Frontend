@@ -1,8 +1,3 @@
-// components/CommentForm.tsx - Updated for dark theme
-
-// components/CommentItem.tsx - Updated for dark theme
-
-// components/CommentsSection.tsx - Updated for dark theme
 import React, { useEffect } from "react";
 import { useComments } from "@/hook/useComments";
 import { CommentForm } from "@/components/ui/comment/CommentForm";
@@ -78,6 +73,7 @@ export const CommentsSection: React.FC<CommentsSectionProps> = ({
                   key={comment.id}
                   comment={comment}
                   onReply={replyComment}
+                  article={articleId}
                   isReply={isReply}
                   currentUserInitial={currentUserInitial}
                />

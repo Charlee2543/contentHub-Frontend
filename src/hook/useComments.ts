@@ -18,6 +18,7 @@ export const useComments = (articleId: number) => {
             try {
                console.log("useComments  getCommentsByArticle ");
                setLoading(true);
+               //  ดึงข้อมูลจาก server
                const data = await getCommentsByArticle(articleId);
                setComments(data);
                setError(null);
@@ -40,6 +41,7 @@ export const useComments = (articleId: number) => {
    const addComment = async (commentData: CommentCreate) => {
       try {
          const newComment = await createComment(commentData);
+         console.log("newComment: ", newComment);
          // เพิ่ม comment ใหม่ที่ด้านบนของรายการ
          setComments((prev) => [newComment, ...prev]);
          return newComment;
@@ -49,9 +51,14 @@ export const useComments = (articleId: number) => {
       }
    };
 
-   const replyComment = async (parentId: number, content: string) => {
+   const replyComment = async (
+      parentId: number,
+      content: string,
+      article: number
+   ) => {
       try {
-         const reply = await replyToComment(parentId, content);
+         const reply = await replyToComment(parentId, content, article);
+         console.log("reply: ", reply);
          // เพิ่ม reply ในรายการ replies ของ parent comment
          setComments((prev) =>
             prev.map((comment) =>

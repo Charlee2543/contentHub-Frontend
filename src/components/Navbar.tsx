@@ -16,7 +16,7 @@ function Navbar() {
       setStatusOpen,
       statusLogin,
       setStatusLogin,
-      accessToken,
+      // accessToken,
    } = useAuth();
    // const router = useRouter();
 
@@ -49,10 +49,10 @@ function Navbar() {
             setLoginSuccessful(false);
          }
       }
-   }, [, accessToken]);
+   }, []);
 
    return (
-      <div className="sticky top-0 z-30">
+      <div className="sticky top-0 z-30 w-full">
          <header className="flex items-center justify-between bg-[var(--dark-green)] px-10 py-3 border-b border-solid border-b-[#E5E8EB] ">
             <div className="flex items-center gap-8">
                <Link
@@ -87,32 +87,40 @@ function Navbar() {
                         //  z-30 login-btn-text py-2 px-6 rounded-[8px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]
                         onClick={() => setToggle((value) => !value)}
                      >
-                        <div className="relative  text-center align-middle rounded-full btnc login-btn-text w-[30px] h-[30px] bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]">
-                           <span className="absolute top-[0px] left-[7px]">
-                              {usernameLogin.charAt(0) +
+                        {/* text-center align-middle  */}
+                        <div className="btnc login-btn-text relative flex items-center justify-centers h-fit min-h-[30px] rounded-full bg-[var(--dark-green)] border-1 border-[var(--green-btn)] hover:text-[#6cdb98] hover:border-[#6cdb98]">
+                           <span
+                           // className="absolute top-[0px] left-[7px]"
+                           // className="border"
+                           >
+                              {usernameLogin.charAt(0).toUpperCase() +
                                  usernameLogin.charAt(1)}
                            </span>
                         </div>
                      </button>
-                     {toggle && (
-                        <div className="absolute -z-10 top-[15px] right-[15px] flex flex-col items-center  bg-[var(--forest-green)] w-[140px] h-fit border-1 border-[var(--green-btn)] rounded-[8px]">
-                           <button className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-t-[8px]">
-                              Profile
-                           </button>
-                           <button
-                              className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full "
-                              onClick={refresh}
-                           >
-                              Refresh
-                           </button>
-                           <button
-                              className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-b-[8px]"
-                              onClick={logout}
-                           >
-                              Logout
-                           </button>
-                        </div>
-                     )}
+                     {/* {toggle && ( */}
+                     <div
+                        className={`transition-all transition-discrete ${
+                           toggle ? " block opacity-100 " : " hidden opacity-0 "
+                        } absolute -z-10 top-[15px] right-[15px] flex flex-col items-center  bg-[var(--forest-green)] w-[140px] h-fit border-1 border-[var(--green-btn)] rounded-[8px]`}
+                     >
+                        <button className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-t-[8px]">
+                           Profile
+                        </button>
+                        <button
+                           className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full "
+                           onClick={refresh}
+                        >
+                           Refresh
+                        </button>
+                        <button
+                           className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-b-[8px]"
+                           onClick={logout}
+                        >
+                           Logout
+                        </button>
+                     </div>
+                     {/* )} */}
                   </div>
                ) : (
                   <button
