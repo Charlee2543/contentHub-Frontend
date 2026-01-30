@@ -10,7 +10,9 @@ import LoginPage from "./LoginPage";
 import { useAuth } from "@/lib/authLoginLogout";
 import { getUserLocalStorage } from "@/lib/getUserLocalStorage";
 import { userProfile } from "@/types/type";
+import { useRouter } from "next/navigation";
 function Navbar() {
+   const router = useRouter();
    const {
       accessToken,
       logout,
@@ -58,9 +60,9 @@ function Navbar() {
    }, [loginSuccessful, accessToken]);
 
    return (
-      <div className="sticky top-0 z-30 w-full">
+      <div className="w-full">
          <header className="flex items-center justify-between bg-[var(--dark-green)] px-10 py-3 border-b border-solid border-b-[#E5E8EB] ">
-            <div className="flex items-center gap-8">
+            <section className="flex items-center gap-8">
                <Link
                   href="/"
                   className="btnc flex items-center gap-3  text-white hover:text-[var(--green-btn)] hover:underline"
@@ -80,8 +82,8 @@ function Navbar() {
                      Contact Admin
                   </Link> */}
                </div>
-            </div>
-            <div className="flex flex-1 justify-end gap-8">
+            </section>
+            <section className="flex flex-1 justify-end gap-8">
                {loginSuccessful ? (
                   <div
                      ref={modalRef}
@@ -123,7 +125,12 @@ function Navbar() {
                            toggle ? " block opacity-100 " : " hidden opacity-0 "
                         } absolute -z-10 top-[15px] right-[15px] flex flex-col items-center  bg-[var(--forest-green)] w-[140px] h-fit border-1 border-[var(--green-btn)] rounded-[8px]`}
                      >
-                        <button className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-t-[8px]">
+                        <button
+                           className="btnc py-1 hover:bg-[var(--dark-green)] hover:border-1 hover:border-[var(--green-btn)] w-full rounded-t-[8px]"
+                           onClick={() => {
+                              return router.push(`/editProfile`);
+                           }}
+                        >
                            Profile
                         </button>
                         <button
@@ -149,7 +156,7 @@ function Navbar() {
                      เข้าสูระบบ
                   </button>
                )}
-            </div>
+            </section>
          </header>
          <LoginPage
             statusLogin={statusLogin}

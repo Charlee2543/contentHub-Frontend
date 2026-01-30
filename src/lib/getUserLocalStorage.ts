@@ -8,9 +8,9 @@ export const getUserLocalStorage = () => {
    } catch (error) {
       return console.error(
          "Failed to parse user data from localStorage",
-         error
+         error,
       );
    }
 };
 
-console.log("getUserLocalStorage: ", getUserLocalStorage());
+// console.log("getUserLocalStorage: ", getUserLocalStorage());
