@@ -4,7 +4,7 @@ const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
 
 export function buildApi(
    getAccessToken: () => string | null,
-   refreshFn: () => Promise<string | null>
+   refreshFn: () => Promise<string | null>,
 ) {
    const api = axios.create({
       baseURL: API_URL,
@@ -46,7 +46,7 @@ export function buildApi(
             }
          }
          return Promise.reject(error);
-      }
+      },
    );
 
    return api;

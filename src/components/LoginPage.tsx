@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
-import InputText from "./ui/InputText";
-import { registerApi, loginApi } from "@/services/user";
+import { registerApi } from "@/services/user";
 import { dataRegisterType, dataLoginType, userProfile } from "@/types/type";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +12,7 @@ import {
 } from "@/lib/zodValidation";
 import { AxiosResponse, AxiosError } from "axios";
 import { useAuth } from "@/lib/authLoginLogout";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { ClickTocloseElement } from "@/lib/ClickTocloseElement";
 
 type LoginStatus = "login" | "register" | null;
@@ -43,8 +42,6 @@ interface responseErrorTyperegister {
 function LoginPage({
    statusLogin,
    setStatusLogin,
-   declareLogin,
-   declareRegister,
    statusOpen,
    setStatusOpen,
 }: loginOageType) {
@@ -57,7 +54,7 @@ function LoginPage({
    //    email: "",
    //    password: "",
    // });
-   const router = useRouter();
+   // const router = useRouter();
    const { login } = useAuth();
    const [errorAlertLogin, setErrorAlertLogin] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
@@ -116,13 +113,13 @@ function LoginPage({
          if (dataError.response) {
             console.log(
                "dataError: ",
-               dataError.response.data.non_field_errors
+               dataError.response.data.non_field_errors,
             );
 
             alert(
                `error login \n${dataError.response.data.non_field_errors.join(
-                  "\n"
-               )}`
+                  "\n",
+               )}`,
             );
          } else {
             console.error("Unexpected error:", dataError);

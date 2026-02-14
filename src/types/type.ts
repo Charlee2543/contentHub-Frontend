@@ -62,3 +62,17 @@ export interface CommentCreate {
    parent?: number;
    content: string;
 }
+
+export interface UserProfile {
+   userId: string | null;
+   username: string | null;
+   email: string | null;
+}
+export interface ResponseUserProfile {
+   user_id: UUID;
+   username: string;
+   email: string;
+   profile_picture_url: string;
+   created_at: Date;
+   updated_at: Date;
+}

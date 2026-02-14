@@ -10,7 +10,7 @@ import React, {
 import Cookies from "js-cookie";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { userToken, userProfile } from "@/types/type";
-import { RemoveUserProfile } from "./validate";
+// import { RemoveUserProfile } from "./validate";
 import { buildApi } from "./apiValidateToken";
 const API_URL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
 
@@ -27,7 +27,7 @@ type AuthContextType = {
    refresh: () => Promise<string | null>;
    login: (
       email: string,
-      password: string
+      password: string,
    ) => Promise<AxiosResponse<userToken> | AxiosError<responseErrorTypeLogin>>;
    logout: () => Promise<void>;
    statusOpen: boolean;
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             { email: email, password: password },
             {
                withCredentials: true, // ส่ง/รับ cookie
-            }
+            },
          );
          //   if (!res.ok) throw new Error("login failed");
          const data = res; //as AxiosResponse<userToken>; // { access: "..." }

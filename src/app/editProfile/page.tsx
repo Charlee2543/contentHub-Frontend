@@ -3,29 +3,74 @@ import React from "react";
 import Image from "next/image";
 import { getUserLocalStorage } from "@/lib/getUserLocalStorage";
 import { useEffect, useState } from "react";
+import { ApiEditProfile } from "@/services/ApiEditProfile";
+import { UserProfile } from "@/types/type";
 
 export default function Page() {
-   const [username, setUsername] = useState<string | null>(null);
+   const { getUserProfile, putUserProfile } = ApiEditProfile();
+   // const [userUUID, setUserUUID] = useState<string | null>(null);
+   const [userRequestProfile, setUserRequestProfile] = useState<UserProfile>({
+      username: "",
+      email: "",
+      userId: "",
+   });
    const [userImage, setUserImage] = useState<string | null>(null);
-   const [userEmail, setUserEmail] = useState<string | null>(null);
    useEffect(() => {
       const userProfile = getUserLocalStorage();
+      console.log("userProfile: ", userProfile);
       if (userProfile) {
-         setUsername(userProfile.username);
-         setUserEmail(userProfile.email);
+         console.log("set data from local");
+         setUserRequestProfile({
+            ...userRequestProfile,
+            username: userProfile.username,
+            email: userProfile.email,
+            userId: userProfile.user_id,
+         });
+
          if (userProfile.profile_picture_url) {
             setUserImage(userProfile.profile_picture_url);
          }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
+   const getDataUserProfile = async () => {
+      if (userRequestProfile.userId) {
+         const data = await getUserProfile(userRequestProfile.userId);
+         console.log("getUserProfile: ", data);
+      }
+   };
+
+   const submitEditProfile = async () => {
+      console.log("submitEditProfile ");
+      if (userRequestProfile.email && userRequestProfile.username) {
+         // console.log("userProfile: ", userRequestProfile);
+         const data = putUserProfile(userRequestProfile);
+         console.log("data: ", data);
+         // นำไปแก้ไขที่ localhost
+      } else {
+         switch (true) {
+            case !userRequestProfile.email:
+               console.log("ใส่ค่าemail");
+            case !userRequestProfile.username:
+               console.log("ใส่ค่าusername");
+            default:
+               break;
+         }
+      }
+   };
+   // const booleanCheck = true;
    return (
       <div className="flex flex-row mx-5  w-full">
          <section className="flex flex-col gap-3 justify-center items-center w-fit">
             {userImage ? (
                <Image
                   src={userImage}
-                  alt={username ? username : "username"}
+                  alt={
+                     userRequestProfile.username
+                        ? userRequestProfile.username
+                        : "username"
+                  }
                   width={120}
                   height={120}
                   className="rounded-full"
@@ -33,10 +78,16 @@ export default function Page() {
             ) : (
                <h1>Image Profile</h1>
             )}
-            <button className="btns button-link w-full whitespace-nowrap">
+            <button
+               // onClick={() => putUserProfile()}
+               className="btns button-link w-full whitespace-nowrap"
+            >
                Change Profile
             </button>
-            <button className="btns button-link w-full whitespace-nowrap">
+            <button
+               onClick={() => getDataUserProfile()}
+               className="btns button-link w-full whitespace-nowrap"
+            >
                Change Password
             </button>
          </section>
@@ -58,9 +109,16 @@ export default function Page() {
                   // }}
                   // onBlur={loginRegister("email").onBlur}
                   placeholder={"Email"}
-                  value={userEmail ? userEmail : ""}
+                  value={
+                     userRequestProfile.email
+                        ? userRequestProfile.email
+                        : "name@mail.com"
+                  }
                   onChange={(e) => {
-                     setUserEmail(e.target.value);
+                     setUserRequestProfile({
+                        ...userRequestProfile,
+                        email: e.target.value,
+                     });
                   }}
                   className="w-full content-text placeholder:description-text focus:outline-0 "
                />
@@ -79,14 +137,24 @@ export default function Page() {
                   // }}
                   // onBlur={loginRegister("email").onBlur}
                   placeholder={"username"}
-                  value={username ? username : ""}
+                  value={
+                     userRequestProfile.username
+                        ? userRequestProfile.username
+                        : "username"
+                  }
                   onChange={(e) => {
-                     setUsername(e.target.value);
+                     setUserRequestProfile({
+                        ...userRequestProfile,
+                        username: e.target.value,
+                     });
                   }}
                   className="w-full content-text placeholder:description-text focus:outline-0 "
                />
             </label>
-            <button className="btns button-link  w-full max-w-[400px] ">
+            <button
+               onClick={() => submitEditProfile()}
+               className="btns button-link  w-full max-w-[400px] "
+            >
                Change your profile
             </button>
          </section>
