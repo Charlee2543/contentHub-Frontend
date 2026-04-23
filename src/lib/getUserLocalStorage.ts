@@ -1,6 +1,7 @@
 export const getUserLocalStorage = () => {
    try {
       const userData = localStorage.getItem("userProfile");
+      console.log("userData: ", userData);
       if (userData) {
          const dataUserLocalstorage = JSON.parse(userData);
          return dataUserLocalstorage;

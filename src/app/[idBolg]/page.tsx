@@ -54,7 +54,7 @@ export default function Home({
       const fetch = async () => {
          try {
             const res = await axios.get(
-               `${API_URL}/posts/${objectParam.article_id}`
+               `${API_URL}/posts/${objectParam.article_id}`,
             );
             setDataBlog(res.data);
          } catch (error) {
@@ -104,14 +104,14 @@ export default function Home({
                <p className="tag-text mb-4 mx-4">
                   Updated :{updateAt ? "  " + datePassed(updateAt) : "DD/MM/YY"}
                </p>
-               <div className="relative w-full h-[60vh] max-h-[650px]">
+               <div className="relative w-full h-[60vh] max-h-[650px]   ">
                   <Image
                      className="absolute"
-                     style={{ objectFit: "cover" }}
                      src={dataBlog.picture}
                      alt={dataBlog.title}
-                     fill={true}
+                     fill
                      sizes="(max-width: 1200px) 100vw, 70vw "
+                     style={{ objectFit: "contain" }}
                      // height={256}
                   />
                </div>

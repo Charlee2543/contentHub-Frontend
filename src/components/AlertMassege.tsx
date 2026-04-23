@@ -1,7 +1,7 @@
 import { ClickTocloseElement } from "@/lib/ClickTocloseElement";
 import React, { Dispatch, SetStateAction, useRef } from "react";
 interface loginOageType {
-   massage: string;
+   message: string;
    statusOpen: boolean;
    setStatusOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -10,7 +10,7 @@ interface loginOageType {
 const [statusOpen,setStatusOpen]=useState<boolean>(false)
 */
 
-function AlertMassege({ statusOpen, setStatusOpen, massage }: loginOageType) {
+function AlertMassege({ statusOpen, setStatusOpen, message }: loginOageType) {
    const modalRef = useRef<HTMLDivElement>(null);
    ClickTocloseElement(modalRef, setStatusOpen);
    return (
@@ -25,7 +25,7 @@ function AlertMassege({ statusOpen, setStatusOpen, massage }: loginOageType) {
             className="mt-10 px-8 py-5 bg-[var(--dark-green)] rounded-lg shadow-lg "
          >
             {" "}
-            Alert Massage{massage}
+            Alert message: {message}
          </p>
       </div>
    );

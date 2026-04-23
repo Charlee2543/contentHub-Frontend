@@ -5,6 +5,7 @@ import { getUserLocalStorage } from "@/lib/getUserLocalStorage";
 import { useEffect, useState } from "react";
 import { ApiEditProfile } from "@/services/ApiEditProfile";
 import { UserProfile } from "@/types/type";
+import AlertMassege from "@/components/AlertMassege";
 
 export default function Page() {
    const { getUserProfile, putUserProfile } = ApiEditProfile();
@@ -15,6 +16,30 @@ export default function Page() {
       userId: "",
    });
    const [userImage, setUserImage] = useState<string | null>(null);
+   //  message alert
+
+   /* 
+   function insert message alert to array
+   function import message to show alert 
+   useEffect remove alert text
+   
+   */
+   const [textAlert, setTextAlert] = useState<string>(``);
+   // console.log("textAlert: ", textAlert);
+   const [statusOpenAlert, setStatusOpenAlert] = useState<boolean>(false);
+   // console.log("statusOpenAlert: ", statusOpenAlert);
+   // เมื่อมีแจ้งเตือน ให้ทำการเพิ่มแจ้งเตื่อนยไป useState แล้ว set alert ture
+   const messageAlert = (message: string) => {
+      setTextAlert((prev) => prev + `\n` + message);
+      setStatusOpenAlert(true);
+   };
+   // เมื่อ statusOpenAlert เป็น false ให้ textAlert []
+   useEffect(() => {
+      if (statusOpenAlert === false && textAlert) {
+         setTextAlert(``);
+      }
+   }, [statusOpenAlert, textAlert]);
+   //  end message alert
    useEffect(() => {
       const userProfile = getUserLocalStorage();
       console.log("userProfile: ", userProfile);
@@ -52,17 +77,20 @@ export default function Page() {
          switch (true) {
             case !userRequestProfile.email:
                console.log("ใส่ค่าemail");
+               messageAlert("ใส่ค่าemail");
             case !userRequestProfile.username:
                console.log("ใส่ค่าusername");
+               messageAlert("ใส่ค่าusername");
             default:
                break;
          }
       }
    };
+
    // const booleanCheck = true;
    return (
-      <div className="flex flex-row mx-5  w-full">
-         <section className="flex flex-col gap-3 justify-center items-center w-fit">
+      <div className="flex flex-row justify-center mx-5  w-[70%] ">
+         <section className="flex flex-col gap-3 justify-center items-center w-fit ">
             {userImage ? (
                <Image
                   src={userImage}
@@ -91,8 +119,8 @@ export default function Page() {
                Change Password
             </button>
          </section>
-         <div className="border-l-1 border-[#c3c3c375] h-full mx-5"></div>
-         <section className="w-full py-5 flex flex-col items-center gap-6 ">
+         <div className="border-l-1 border-[#c3c3c375] h-full mx-10 "></div>
+         <section className="w-fit py-5 flex flex-col items-center gap-6 ">
             <h1 className="second-title ">Edit your account</h1>
             <label
                className={`flex  items-center px-4 py-3 bg-[var(--forest-green)] h-[40px] rounded-[8px]
@@ -110,9 +138,7 @@ export default function Page() {
                   // onBlur={loginRegister("email").onBlur}
                   placeholder={"Email"}
                   value={
-                     userRequestProfile.email
-                        ? userRequestProfile.email
-                        : "name@mail.com"
+                     userRequestProfile.email ? userRequestProfile.email : ""
                   }
                   onChange={(e) => {
                      setUserRequestProfile({
@@ -140,7 +166,7 @@ export default function Page() {
                   value={
                      userRequestProfile.username
                         ? userRequestProfile.username
-                        : "username"
+                        : ""
                   }
                   onChange={(e) => {
                      setUserRequestProfile({
@@ -157,6 +183,11 @@ export default function Page() {
             >
                Change your profile
             </button>
+            <AlertMassege
+               message={textAlert}
+               statusOpen={statusOpenAlert}
+               setStatusOpen={setStatusOpenAlert}
+            />
          </section>
       </div>
    );
